@@ -15,8 +15,8 @@ class Restaurant(db.Model,SerializerMixin):
     name=db.Column(db.String,unique=True)
     address=db.Column(db.String)
 
-    restaurant_pizzas = db.relationship('RestaurantPizza', back_populates='restaurant', overlaps="restaurant_pizzas")
-    pizzas = db.relationship('Pizza', secondary='restaurant_pizzas', back_populates='restaurants', overlaps="pizzas")
+    restaurant_pizzas = db.relationship('RestaurantPizza', back_populates='restaurant', overlaps="restaurant_pizza")
+    pizzas = db.relationship('Pizza', secondary='restaurant_pizzas', back_populates='restaurants')
 
 
    
@@ -59,8 +59,8 @@ class RestaurantPizza(db.Model,SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    pizza = db.relationship('Pizza', back_populates='restaurant_pizzas', overlaps="pizzas")
-    restaurant = db.relationship('Restaurant', back_populates='restaurant_pizzas', overlaps="restaurant_pizzas")
+    pizza = db.relationship('Pizza', back_populates='restaurant_pizzas', overlaps="pizza")
+    restaurant = db.relationship('Restaurant', back_populates='restaurant_pizzas', overlaps="restaurants")
 
 
     def __repr__(self):

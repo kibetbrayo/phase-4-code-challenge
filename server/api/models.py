@@ -1,6 +1,7 @@
 from sqlalchemy.orm import validates
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
+from flask import make_response,jsonify
 
 db=SQLAlchemy()
 
@@ -17,7 +18,6 @@ class Restaurant(db.Model,SerializerMixin):
 
     restaurant_pizzas = db.relationship('RestaurantPizza', back_populates='restaurant', overlaps="restaurant_pizza")
     pizzas = db.relationship('Pizza', secondary='restaurant_pizzas', back_populates='restaurants')
-
 
    
     def __repr__(self):
@@ -59,7 +59,7 @@ class RestaurantPizza(db.Model,SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    pizza = db.relationship('Pizza', back_populates='restaurant_pizzas', overlaps="pizza")
+    pizza = db.relationship('Pizza', back_populates='restaurant_pizzas', overlaps="restaurant_pizza")
     restaurant = db.relationship('Restaurant', back_populates='restaurant_pizzas', overlaps="restaurants")
 
 
@@ -71,6 +71,13 @@ class RestaurantPizza(db.Model,SerializerMixin):
         if price >= 1 and price <= 30:
             return price
         else:
-            raise AssertionError("Price must be between 1 and 30.")
+            response_dict={
+                "errors": ["validation errors"]
+            }
+            response=make_response(
+                jsonify(response_dict),
+                403
+            )
+            return response
 
     

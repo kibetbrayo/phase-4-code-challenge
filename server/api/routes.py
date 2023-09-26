@@ -35,28 +35,6 @@ class Restaurants(Resource):
             200
         )
         return response
-    
-    def post(self):
-        data=request.get_json()
-        new_restaurant_pizza = RestaurantPizza(
-            price=data.get('price'),
-            pizza_id=data.get("pizza_id"),
-            restaurant_id=data.get("restaurant_id"),
-        )
-
-        db.session.add(new_restaurant_pizza)
-        db.session.commit()
-
-        response_dict = new_restaurant_pizza.to_dict()
-        response = make_response(
-            jsonify(response_dict),
-            201  
-        )
-        return response
-
-
-
-api.add_resource(Restaurants, '/restaurants')
 
 class RestaurantByID(Resource):
     def get(self, id):

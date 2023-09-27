@@ -98,7 +98,7 @@ class RestaurantByID(Resource):
             )
             return response
 
-api.add_resource(RestaurantByID, '/restaurants/<int:id>')
+api.add_resource(RestaurantByID, '/restaurants')
 
 class Pizzas(Resource):
     def get(self):

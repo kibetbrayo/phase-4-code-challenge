@@ -20,5 +20,6 @@ python-dateutil
 pytz
 six
 SQLAlchemy
+SQLAlchemy-serializer
 typing_extensions
 Werkzeug

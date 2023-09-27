@@ -18,7 +18,6 @@ class Index(Resource):
             
         }
 
-
         response = make_response(
             jsonify(response_dict),
             200,

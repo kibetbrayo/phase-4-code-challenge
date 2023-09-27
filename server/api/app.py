@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pizza_restaurant.db'
 
 
+
 db.init_app(app)
 migrate = Migrate(app, db)
 

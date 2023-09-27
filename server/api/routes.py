@@ -35,6 +35,28 @@ class Restaurants(Resource):
             200
         )
         return response
+    
+    def post(self):
+        data=request.get_json()
+        new_restaurant_pizza = RestaurantPizza(
+            price=data.get('price'),
+            pizza_id=data.get("pizza_id"),
+            restaurant_id=data.get("restaurant_id"),
+        )
+
+        db.session.add(new_restaurant_pizza)
+        db.session.commit()
+
+        response_dict = new_restaurant_pizza.to_dict()
+        response = make_response(
+            jsonify(response_dict),
+            201  
+        )
+        return response
+
+
+
+api.add_resource(Restaurants, '/restaurants')
 
 class RestaurantByID(Resource):
     def get(self, id):
@@ -111,34 +133,3 @@ class Pizzas(Resource):
         return response
 
 api.add_resource(Pizzas, '/pizzas')
-
-class RestaurantPizzas(Resource):
-    def get(self):
-        restaurants_pizzas_dicts = []
-        for restaurant_pizza in RestaurantPizza.query.all():
-            restaurant_dict = restaurant_pizza.to_dict()
-            restaurants_pizzas_dicts.append(restaurant_dict)
-
-        response = make_response(
-            jsonify(restaurants_pizzas_dicts),
-            200
-        )
-        return response
-     
-    def post(self):
-        data=request.get_json()
-        new_restaurant_pizza=RestaurantPizza(
-            price=data.get('price'),
-            pizza_id= data.get("pizza_id"),
-            restaurant_id= data.get("restaurant_id"),
-        ) 
-        db.session.add(new_restaurant_pizza)
-        db.session.commit()
-        
-        response = make_response(
-            new_restaurant_pizza.to_dict(),
-             201 
-        )
-        return response
-    
-api.add_resource(RestaurantPizzas, '/restaurant_pizzas')

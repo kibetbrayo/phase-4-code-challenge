@@ -12,6 +12,16 @@ class Index(Resource):
 
         response_dict = {
             "index": "Welcome to the Pizza Restaurant RESTful API",
+            
+        }
+        {
+            "/pizzas to view the pizzas "
+        }
+        {
+            "/restaurants to view all restaurants"
+        }
+        {
+            "/restaurant/<int:id> to view a restaurant by id"
         }
 
         response = make_response(
